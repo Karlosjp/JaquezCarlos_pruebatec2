@@ -1,4 +1,4 @@
-package ar.pruebatec2.gestionturnos;
+package com.pruebatec2.gestionturnos;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

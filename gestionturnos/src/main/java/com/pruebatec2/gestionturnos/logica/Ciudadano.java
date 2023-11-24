@@ -1,4 +1,4 @@
-package ar.pruebatec2.gestionturnos.logica;
+package com.pruebatec2.gestionturnos.logica;
 
 import java.io.Serializable;
 import java.util.List;
@@ -24,6 +24,7 @@ public class Ciudadano implements Serializable {
     private String apellido;
     private String dni;
     private String telefono;
+    private String direccion;
 
     @OneToMany(mappedBy = "ciudadano")
     private List<Turno> turnos;
@@ -31,13 +32,22 @@ public class Ciudadano implements Serializable {
     public Ciudadano() {
     }
 
-    public Ciudadano(Long id, String nombre, String apellido, String dni, String telefono, List<Turno> turnos) {
+    public Ciudadano(Long id, String nombre, String apellido, String dni, String telefono, String direccion, List<Turno> turnos) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.telefono = telefono;
+        this.direccion = direccion;
         this.turnos = turnos;
+    }
+
+    public Ciudadano(String nombre, String apellido, String dni, String telefono, String direccion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.telefono = telefono;
+        this.direccion = direccion;
     }
 
     public Long getId() {
@@ -78,6 +88,14 @@ public class Ciudadano implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public List<Turno> getTurnos() {

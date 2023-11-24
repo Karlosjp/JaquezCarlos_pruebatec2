@@ -1,4 +1,4 @@
-package ar.pruebatec2.gestionturnos.resources;
+package com.pruebatec2.gestionturnos.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

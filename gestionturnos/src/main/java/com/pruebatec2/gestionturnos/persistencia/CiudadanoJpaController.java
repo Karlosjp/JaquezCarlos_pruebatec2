@@ -1,14 +1,14 @@
-package ar.pruebatec2.gestionturnos.persistencia;
+package com.pruebatec2.gestionturnos.persistencia;
 
-import ar.pruebatec2.gestionturnos.extras.Recursos;
-import ar.pruebatec2.gestionturnos.logica.Ciudadano;
+import com.pruebatec2.gestionturnos.logica.Ciudadano;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import ar.pruebatec2.gestionturnos.logica.Turno;
-import ar.pruebatec2.gestionturnos.persistencia.exceptions.NonexistentEntityException;
+import com.pruebatec2.gestionturnos.logica.Turno;
+import com.pruebatec2.gestionturnos.persistencia.exceptions.NonexistentEntityException;
+import com.pruebatec2.gestionturnos.utilidades.Recursos;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -22,7 +22,7 @@ import javax.persistence.Persistence;
 public class CiudadanoJpaController implements Serializable {
 
     public CiudadanoJpaController() {
-        this.emf = Persistence.createEntityManagerFactory(Recursos.PERSISTENCENAME);
+        this.emf = this.emf = Persistence.createEntityManagerFactory(Recursos.PERSISTENCENAME);
     }
     private EntityManagerFactory emf = null;
 

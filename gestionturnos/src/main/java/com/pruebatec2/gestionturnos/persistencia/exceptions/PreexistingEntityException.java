@@ -1,4 +1,4 @@
-package ar.pruebatec2.gestionturnos.persistencia.exceptions;
+package com.pruebatec2.gestionturnos.persistencia.exceptions;
 
 public class PreexistingEntityException extends Exception {
     public PreexistingEntityException(String message, Throwable cause) {

@@ -1,4 +1,4 @@
-package ar.pruebatec2.gestionturnos.persistencia.exceptions;
+package com.pruebatec2.gestionturnos.persistencia.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,10 @@
-package ar.pruebatec2.gestionturnos.extras;
+package com.pruebatec2.gestionturnos.utilidades;
 
 /**
  *
  * @author Carlos Jaquez
  */
-public enum Estados {
+public enum Estado {
     TERMINADO,
     ACTIVO,
     CANCELADO

@@ -1,7 +1,9 @@
-package ar.pruebatec2.gestionturnos.logica;
+package com.pruebatec2.gestionturnos.logica;
 
+import com.pruebatec2.gestionturnos.utilidades.Estado;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,7 +24,8 @@ public class Turno implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer numero;
-    private LocalDate fecha;
+    private LocalDateTime fecha;
+    private Estado estado;
 
     @OneToOne(mappedBy = "turno")
     private Tramite tramite;
@@ -34,12 +37,21 @@ public class Turno implements Serializable {
     public Turno() {
     }
 
-    public Turno(Long id, Integer numero, LocalDate fecha, Tramite tramite, Ciudadano ciudadano) {
+    public Turno(Long id, Integer numero, LocalDateTime fecha, Estado estado, Tramite tramite, Ciudadano ciudadano) {
         this.id = id;
         this.numero = numero;
         this.fecha = fecha;
+        this.estado = estado;
         this.tramite = tramite;
         this.ciudadano = ciudadano;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     public Long getId() {
@@ -58,11 +70,11 @@ public class Turno implements Serializable {
         this.numero = numero;
     }
 
-    public LocalDate getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

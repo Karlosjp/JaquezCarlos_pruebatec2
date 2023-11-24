@@ -1,18 +1,20 @@
-package ar.pruebatec2.gestionturnos.persistencia;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.pruebatec2.gestionturnos.persistencia;
 
-import ar.pruebatec2.gestionturnos.extras.Recursos;
-import ar.pruebatec2.gestionturnos.logica.Tramite;
+import com.pruebatec2.gestionturnos.logica.Tramite;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import ar.pruebatec2.gestionturnos.logica.Turno;
-import ar.pruebatec2.gestionturnos.persistencia.exceptions.NonexistentEntityException;
+import com.pruebatec2.gestionturnos.logica.Turno;
+import com.pruebatec2.gestionturnos.persistencia.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  *
@@ -20,8 +22,8 @@ import javax.persistence.Persistence;
  */
 public class TramiteJpaController implements Serializable {
 
-    public TramiteJpaController() {
-        this.emf = Persistence.createEntityManagerFactory(Recursos.PERSISTENCENAME);
+    public TramiteJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
     }
     private EntityManagerFactory emf = null;
 
@@ -171,5 +173,5 @@ public class TramiteJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

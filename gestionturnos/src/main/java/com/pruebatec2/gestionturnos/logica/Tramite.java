@@ -1,4 +1,4 @@
-package ar.pruebatec2.gestionturnos.logica;
+package com.pruebatec2.gestionturnos.logica;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
