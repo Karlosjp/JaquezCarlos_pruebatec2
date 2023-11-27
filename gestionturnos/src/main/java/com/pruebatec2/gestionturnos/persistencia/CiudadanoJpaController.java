@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.pruebatec2.gestionturnos.persistencia;
 
 import com.pruebatec2.gestionturnos.logica.Ciudadano;
@@ -6,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.pruebatec2.gestionturnos.logica.Direccion;
 import com.pruebatec2.gestionturnos.logica.Turno;
 import com.pruebatec2.gestionturnos.persistencia.exceptions.NonexistentEntityException;
 import com.pruebatec2.gestionturnos.utilidades.Recursos;
@@ -14,6 +19,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  *
@@ -22,7 +28,7 @@ import javax.persistence.Persistence;
 public class CiudadanoJpaController implements Serializable {
 
     public CiudadanoJpaController() {
-        this.emf = this.emf = Persistence.createEntityManagerFactory(Recursos.PERSISTENCENAME);
+        this.emf = Persistence.createEntityManagerFactory(Recursos.PERSISTENCENAME);
     }
     private EntityManagerFactory emf = null;
 
@@ -38,6 +44,11 @@ public class CiudadanoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Direccion direccion = ciudadano.getDireccion();
+            if (direccion != null) {
+                direccion = em.getReference(direccion.getClass(), direccion.getId());
+                ciudadano.setDireccion(direccion);
+            }
             List<Turno> attachedTurnos = new ArrayList<Turno>();
             for (Turno turnosTurnoToAttach : ciudadano.getTurnos()) {
                 turnosTurnoToAttach = em.getReference(turnosTurnoToAttach.getClass(), turnosTurnoToAttach.getId());
@@ -45,6 +56,10 @@ public class CiudadanoJpaController implements Serializable {
             }
             ciudadano.setTurnos(attachedTurnos);
             em.persist(ciudadano);
+            if (direccion != null) {
+                direccion.getCiudadanos().add(ciudadano);
+                direccion = em.merge(direccion);
+            }
             for (Turno turnosTurno : ciudadano.getTurnos()) {
                 Ciudadano oldCiudadanoOfTurnosTurno = turnosTurno.getCiudadano();
                 turnosTurno.setCiudadano(ciudadano);
@@ -68,8 +83,14 @@ public class CiudadanoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Ciudadano persistentCiudadano = em.find(Ciudadano.class, ciudadano.getId());
+            Direccion direccionOld = persistentCiudadano.getDireccion();
+            Direccion direccionNew = ciudadano.getDireccion();
             List<Turno> turnosOld = persistentCiudadano.getTurnos();
             List<Turno> turnosNew = ciudadano.getTurnos();
+            if (direccionNew != null) {
+                direccionNew = em.getReference(direccionNew.getClass(), direccionNew.getId());
+                ciudadano.setDireccion(direccionNew);
+            }
             List<Turno> attachedTurnosNew = new ArrayList<Turno>();
             for (Turno turnosNewTurnoToAttach : turnosNew) {
                 turnosNewTurnoToAttach = em.getReference(turnosNewTurnoToAttach.getClass(), turnosNewTurnoToAttach.getId());
@@ -78,6 +99,14 @@ public class CiudadanoJpaController implements Serializable {
             turnosNew = attachedTurnosNew;
             ciudadano.setTurnos(turnosNew);
             ciudadano = em.merge(ciudadano);
+            if (direccionOld != null && !direccionOld.equals(direccionNew)) {
+                direccionOld.getCiudadanos().remove(ciudadano);
+                direccionOld = em.merge(direccionOld);
+            }
+            if (direccionNew != null && !direccionNew.equals(direccionOld)) {
+                direccionNew.getCiudadanos().add(ciudadano);
+                direccionNew = em.merge(direccionNew);
+            }
             for (Turno turnosOldTurno : turnosOld) {
                 if (!turnosNew.contains(turnosOldTurno)) {
                     turnosOldTurno.setCiudadano(null);
@@ -124,6 +153,11 @@ public class CiudadanoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The ciudadano with id " + id + " no longer exists.", enfe);
             }
+            Direccion direccion = ciudadano.getDireccion();
+            if (direccion != null) {
+                direccion.getCiudadanos().remove(ciudadano);
+                direccion = em.merge(direccion);
+            }
             List<Turno> turnos = ciudadano.getTurnos();
             for (Turno turnosTurno : turnos) {
                 turnosTurno.setCiudadano(null);
@@ -166,6 +200,22 @@ public class CiudadanoJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             return em.find(Ciudadano.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Ciudadano> findCiudadanoEntitiesName(String nombre) {
+        EntityManager em = getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Ciudadano> query = cb.createQuery(Ciudadano.class);
+
+            Root<Ciudadano> ciudadano = query.from(Ciudadano.class);
+            Query q = em.createQuery(query.where(cb.equal(ciudadano.get("nombre"), nombre)));
+
+            return q.getResultList();
         } finally {
             em.close();
         }

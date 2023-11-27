@@ -23,8 +23,8 @@ public class Turno implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer numero;
-    private LocalDateTime fecha;
+    private String numero;
+    private LocalDate fecha;
     private Estado estado;
 
     @OneToOne(mappedBy = "turno")
@@ -37,7 +37,14 @@ public class Turno implements Serializable {
     public Turno() {
     }
 
-    public Turno(Long id, Integer numero, LocalDateTime fecha, Estado estado, Tramite tramite, Ciudadano ciudadano) {
+    public Turno(String numero, LocalDate fecha, Estado estado, Tramite tramite) {
+        this.numero = numero;
+        this.fecha = fecha;
+        this.estado = estado;
+        this.tramite = tramite;
+    }
+
+    public Turno(Long id, String numero, LocalDate fecha, Estado estado, Tramite tramite, Ciudadano ciudadano) {
         this.id = id;
         this.numero = numero;
         this.fecha = fecha;
@@ -62,19 +69,19 @@ public class Turno implements Serializable {
         this.id = id;
     }
 
-    public Integer getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -92,6 +99,11 @@ public class Turno implements Serializable {
 
     public void setCiudadano(Ciudadano ciudadano) {
         this.ciudadano = ciudadano;
+    }
+
+    @Override
+    public String toString() {
+        return "Turno{" + "numero=" + numero + ", fecha=" + fecha + ", estado=" + estado + ", tramite=" + tramite + '}';
     }
 
 }

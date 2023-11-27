@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.Map;
 
@@ -25,9 +27,23 @@ public class CUtils {
     }
 
     // Transforma un String en objeto Date.
-    public static LocalDateTime stringToDate(String date) throws ParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a").withLocale(Locale.UK);
+    public static LocalDate stringToDate(String date) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        return LocalDateTime.parse(date, formatter);
+        return LocalDate.parse(date, formatter);
+    }
+
+    public static String asignarTurno() {
+        Long turno = 0L;
+        LocalDate hoy = LocalDate.now();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(hoy.getDayOfMonth())
+                .append("-")
+                .append(hoy.getMonth().getDisplayName(TextStyle.SHORT, Locale.ENGLISH))
+                .append("-")
+                .append(turno++);
+
+        return sb.toString();
     }
 }

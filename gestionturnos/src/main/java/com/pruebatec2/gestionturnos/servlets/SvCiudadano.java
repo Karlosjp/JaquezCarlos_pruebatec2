@@ -5,10 +5,12 @@
 package com.pruebatec2.gestionturnos.servlets;
 
 import com.pruebatec2.gestionturnos.logica.Ciudadano;
+import com.pruebatec2.gestionturnos.logica.Direccion;
 import com.pruebatec2.gestionturnos.persistencia.ControladoraPersistencia;
-import com.pruebatec2.gestionturnos.utilidades.CUtils;
+import com.pruebatec2.gestionturnos.utilidades.Recursos;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Carlos Jaquez
+ *
+ * @author Charly Cimino Aprendé más Java en mi canal:
+ * https://www.youtube.com/c/CharlyCimino Encontrá más código en mi repo de
+ * GitHub: https://github.com/CharlyCimino
  */
 @WebServlet(name = "SvCiudadano", urlPatterns = {"/SvCiudadano"})
 public class SvCiudadano extends HttpServlet {
@@ -34,6 +39,11 @@ public class SvCiudadano extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        List<Ciudadano> lista = controladora.listarCiudadanos();
+
+        request.setAttribute("ciudadanos", lista);
+
+        request.getRequestDispatcher(Recursos.NUEVOTURNO).forward(request, response);
     }
 
     /**
@@ -47,8 +57,6 @@ public class SvCiudadano extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("-------------------- Estoy en post ciudadano --------------");
-        
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String dni = request.getParameter("dni");
@@ -61,17 +69,10 @@ public class SvCiudadano extends HttpServlet {
         String provincia = request.getParameter("provincia");
         String cp = request.getParameter("cp");
 
-        String direccionCompleta = calle
-                + ", " + portal
-                + ", " + piso
-                + ", " + puerta
-                + ", " + ciudad
-                + ", " + provincia
-                + ", " + cp;
+        Direccion direccion = controladora.existeSinoCrea(new Direccion(calle, portal, piso, puerta, ciudad, provincia, cp));
+        controladora.existeSinoCrea(new Ciudadano(nombre, apellido, dni, telefono, direccion));
 
-        Ciudadano ciudadano = new Ciudadano(nombre, apellido, dni, telefono, direccionCompleta);
-        
-        controladora.crearCiudadano(ciudadano);
+        response.sendRedirect(Recursos.INDEXJSP);
     }
 
     /**
@@ -82,6 +83,5 @@ public class SvCiudadano extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

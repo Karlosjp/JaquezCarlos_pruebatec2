@@ -4,20 +4,29 @@
  */
 package com.pruebatec2.gestionturnos.servlets;
 
+import com.pruebatec2.gestionturnos.logica.Tramite;
+import com.pruebatec2.gestionturnos.logica.Turno;
+import com.pruebatec2.gestionturnos.utilidades.CUtils;
+import com.pruebatec2.gestionturnos.utilidades.Estado;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Carlos Jaquez
+ * @author Charly Cimino Aprendé más Java en mi canal:
+ * https://www.youtube.com/c/CharlyCimino Encontrá más código en mi repo de
+ * GitHub: https://github.com/CharlyCimino
  */
-public class SvTurno extends HttpServlet {
+@WebServlet(name = "SvNuevoTurno", urlPatterns = {"/SvNuevoTurno"})
+public class SvNuevoTurno extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -43,7 +52,14 @@ public class SvTurno extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String descripcion = request.getParameter("descripcionTramite");
+        String fecha = request.getParameter("inputFecha");
+        LocalDate localDate = CUtils.stringToDate(fecha);
 
+        Tramite tramite = new Tramite(descripcion);
+        Turno turno = new Turno(CUtils.asignarTurno(), localDate, Estado.EN_ESPERA, tramite);
+
+        System.out.println("------------ " + turno + " -------------");
     }
 
     /**

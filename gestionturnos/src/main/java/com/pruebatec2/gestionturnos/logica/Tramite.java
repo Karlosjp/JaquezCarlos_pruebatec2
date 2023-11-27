@@ -27,6 +27,10 @@ public class Tramite implements Serializable {
     public Tramite() {
     }
 
+    public Tramite(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public Tramite(Long id, String descripcion, Turno turno) {
         this.id = id;
         this.descripcion = descripcion;
@@ -55,6 +59,11 @@ public class Tramite implements Serializable {
 
     public void setTurno(Turno turno) {
         this.turno = turno;
+    }
+
+    @Override
+    public String toString() {
+        return "Tramite{" + "descripcion=" + descripcion + ", turno=" + turno + '}';
     }
 
 }

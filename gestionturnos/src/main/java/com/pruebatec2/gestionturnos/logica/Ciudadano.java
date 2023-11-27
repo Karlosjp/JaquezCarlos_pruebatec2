@@ -2,6 +2,7 @@ package com.pruebatec2.gestionturnos.logica;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,10 @@ public class Ciudadano implements Serializable {
     private String apellido;
     private String dni;
     private String telefono;
-    private String direccion;
+
+    @ManyToOne
+    @JoinColumn(name = "direccion_id")
+    private Direccion direccion;
 
     @OneToMany(mappedBy = "ciudadano")
     private List<Turno> turnos;
@@ -32,7 +36,15 @@ public class Ciudadano implements Serializable {
     public Ciudadano() {
     }
 
-    public Ciudadano(Long id, String nombre, String apellido, String dni, String telefono, String direccion, List<Turno> turnos) {
+    public Ciudadano(String nombre, String apellido, String dni, String telefono, Direccion direccion) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.telefono = telefono;
+        this.direccion = direccion;
+    }
+
+    public Ciudadano(Long id, String nombre, String apellido, String dni, String telefono, Direccion direccion, List<Turno> turnos) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -40,14 +52,6 @@ public class Ciudadano implements Serializable {
         this.telefono = telefono;
         this.direccion = direccion;
         this.turnos = turnos;
-    }
-
-    public Ciudadano(String nombre, String apellido, String dni, String telefono, String direccion) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.telefono = telefono;
-        this.direccion = direccion;
     }
 
     public Long getId() {
@@ -90,11 +94,11 @@ public class Ciudadano implements Serializable {
         this.telefono = telefono;
     }
 
-    public String getDireccion() {
+    public Direccion getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
+    public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
 
@@ -104,6 +108,44 @@ public class Ciudadano implements Serializable {
 
     public void setTurnos(List<Turno> turnos) {
         this.turnos = turnos;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.nombre);
+        hash = 67 * hash + Objects.hashCode(this.apellido);
+        hash = 67 * hash + Objects.hashCode(this.dni);
+        hash = 67 * hash + Objects.hashCode(this.telefono);
+        hash = 67 * hash + Objects.hashCode(this.direccion);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ciudadano other = (Ciudadano) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.apellido, other.apellido)) {
+            return false;
+        }
+        if (!Objects.equals(this.dni, other.dni)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefono, other.telefono)) {
+            return false;
+        }
+        return Objects.equals(this.direccion, other.direccion);
     }
 
 }

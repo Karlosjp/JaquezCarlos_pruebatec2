@@ -15,7 +15,12 @@
     </head>
     <body>
         <div>
-            <a class="btn btn-primary" href="nuevoCiudadano.jsp" role="button">Registrar ciudadano</a>
+            <a class="btn btn-primary" href="<%=Recursos.NUEVOCIUDADANO%>" role="button">Registrar ciudadano</a>
         </div>
+        <form action="SvCiudadano" method="get">
+            <div>
+                <button type="submit" class="btn btn-primary">Asignar nuevo turno</button>
+            </div>
+        </form>
     </body>
 </html>
