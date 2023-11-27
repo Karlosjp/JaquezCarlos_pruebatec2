@@ -2,6 +2,8 @@ package com.pruebatec2.gestionturnos.persistencia;
 
 import com.pruebatec2.gestionturnos.logica.Ciudadano;
 import com.pruebatec2.gestionturnos.logica.Direccion;
+import com.pruebatec2.gestionturnos.logica.Tramite;
+import com.pruebatec2.gestionturnos.logica.Turno;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -13,27 +15,47 @@ public class ControladoraPersistencia {
 
     CiudadanoJpaController ciudadanoJPA = new CiudadanoJpaController();
     DireccionJpaController direccionJPA = new DireccionJpaController();
+    TramiteJpaController tramiteJPA = new TramiteJpaController();
+    TurnoJpaController turnoJPA = new TurnoJpaController();
 
     // <editor-fold defaultstate="collapsed" desc="Persistencia Creacion methods. Click on the + sign on the left to edit the code.">
     /**
      * Crea un nuevo usuario
      *
      * @param ciudadano
-     * @param direccion
      */
     public void crearCiudadano(Ciudadano ciudadano) {
         ciudadanoJPA.create(ciudadano);
     }
 
     /**
+     * Crea una nueva direccion
      *
      * @param direccion
      */
     public void crearDireccion(Direccion direccion) {
         direccionJPA.create(direccion);
     }
-    // </editor-fold>
 
+    /**
+     * Crea un nuevo turno
+     *
+     * @param turno
+     */
+    public void crearTurno(Turno turno) {
+        turnoJPA.create(turno);
+    }
+
+    /**
+     * Crea un nuevo tramite
+     *
+     * @param tramite
+     */
+    public void crearTramite(Tramite tramite) {
+        tramiteJPA.create(tramite);
+    }
+
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Persistencia Buscar methods. Click on the + sign on the left to edit the code.">
     /**
      * Si no existe registro de la direccion crea un nuevo registro. Devuelve el

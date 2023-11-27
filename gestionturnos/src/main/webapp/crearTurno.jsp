@@ -19,7 +19,6 @@
     </head>
     <body>
         <div class="container mt-4">
-
             <div class="row">
                 <div class="col-12 mb-3 mb-lg-5">
                     <div class="position-relative card table-nowrap table-card">
@@ -73,21 +72,27 @@
                 <div class="card-header align-items-center">
                     <h5 class="mb-0">Registrar nuevo turno</h5>
                 </div>
-                <div class="table-responsive">
+                <div class="container mt-4">
                     <form action="SvNuevoTurno" method="post">
-                        <div class="form-row">
-                            <div class="form-group col-md">
-                                <label for="inputTramite">Descripcion tramite:</label>
-                                <textarea class="form-control" id="inputTramite" rows="3" 
-                                          name="descripcionTramite" placeholder="breve descripcion del tramite a realizar"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <div class="form-group col-md">
-                                    <label for="inputAnno">Fecha:</label>
-                                    <input type="date" id="inputFecha" name="inputFecha">
-                                </div>
-                            </div>           
+                        <div class="form-group col-md">
+                            <label for="inputIDCiudadano">Ciudadano: </label>
+                            <select class="form-control" size="3" aria-label="size 3 select example" id="inputIDCiudadano" name="idCiudadano" >
+                                <% for (Ciudadano ciudadano : (List<Ciudadano>) request.getAttribute("ciudadanos")) {%>
+                                <option value=<%=ciudadano.getId()%>>
+                                    <%=ciudadano.getId() + " - " + ciudadano.getNombre() + " " + ciudadano.getApellido()%>
+                                </option>
+                                <% }%>
+                            </select>
                         </div>
+                        <div class="form-group col-md">
+                            <label for="inputTramite">Descripcion tramite:</label>
+                            <textarea class="form-control" id="inputTramite" rows="3" 
+                                      name="descripcionTramite" placeholder="breve descripcion del tramite a realizar"></textarea>
+                        </div>
+                        <div class="form-group col-md align-items-center">   
+                            <label for="inputAnno">Fecha:</label>
+                            <input type="date" id="inputFecha" name="inputFecha">
+                        </div> 
                         <div class="row justify-content-md-center">
                             <button type="submit" class="btn btn-primary">Registrar</button>  
                         </div>

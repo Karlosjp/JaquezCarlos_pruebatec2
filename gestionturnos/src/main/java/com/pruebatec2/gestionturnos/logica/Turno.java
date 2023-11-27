@@ -37,11 +37,10 @@ public class Turno implements Serializable {
     public Turno() {
     }
 
-    public Turno(String numero, LocalDate fecha, Estado estado, Tramite tramite) {
+    public Turno(String numero, LocalDate fecha, Estado estado) {
         this.numero = numero;
         this.fecha = fecha;
         this.estado = estado;
-        this.tramite = tramite;
     }
 
     public Turno(Long id, String numero, LocalDate fecha, Estado estado, Tramite tramite, Ciudadano ciudadano) {

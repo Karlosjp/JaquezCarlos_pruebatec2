@@ -12,9 +12,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.pruebatec2.gestionturnos.logica.Turno;
 import com.pruebatec2.gestionturnos.persistencia.exceptions.NonexistentEntityException;
+import com.pruebatec2.gestionturnos.utilidades.Recursos;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -22,8 +24,8 @@ import javax.persistence.EntityManagerFactory;
  */
 public class TramiteJpaController implements Serializable {
 
-    public TramiteJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public TramiteJpaController() {
+        this.emf = Persistence.createEntityManagerFactory(Recursos.PERSISTENCENAME);
     }
     private EntityManagerFactory emf = null;
 
@@ -173,5 +175,5 @@ public class TramiteJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

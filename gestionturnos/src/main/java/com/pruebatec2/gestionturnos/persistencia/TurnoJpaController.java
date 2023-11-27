@@ -13,9 +13,11 @@ import com.pruebatec2.gestionturnos.logica.Tramite;
 import com.pruebatec2.gestionturnos.logica.Ciudadano;
 import com.pruebatec2.gestionturnos.logica.Turno;
 import com.pruebatec2.gestionturnos.persistencia.exceptions.NonexistentEntityException;
+import com.pruebatec2.gestionturnos.utilidades.Recursos;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -23,8 +25,8 @@ import javax.persistence.EntityManagerFactory;
  */
 public class TurnoJpaController implements Serializable {
 
-    public TurnoJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public TurnoJpaController() {
+        this.emf = Persistence.createEntityManagerFactory(Recursos.PERSISTENCENAME);
     }
     private EntityManagerFactory emf = null;
 
@@ -202,5 +204,5 @@ public class TurnoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
