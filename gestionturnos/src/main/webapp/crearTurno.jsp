@@ -4,6 +4,7 @@
     Author     : Carlos Jaquez
 --%>
 
+<%@page import="java.time.LocalDate"%>
 <%@page import="java.time.LocalDateTime"%>
 <%@page import="com.pruebatec2.gestionturnos.utilidades.Estado"%>
 <%@page import="java.util.List"%>
@@ -15,16 +16,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Asignar nuevo turno</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
     <body>
+        <jsp:include page="nav-bar.jsp"/>
         <div class="container mt-4">
             <div class="row">
                 <div class="col-12 mb-3 mb-lg-5">
                     <div class="position-relative card table-nowrap table-card">
-                        <div>
-                            <a class="btn btn-primary" href=<%=Recursos.HOME%> role="button"><- Atras</a>
-                        </div>
                         <% if (request.getAttribute("ciudadanos") != null) {%>
                         <div class="card-header align-items-center">
                             <h5 class="mb-0">Ciudadanos registrados</h5>
@@ -73,10 +71,12 @@
                     <h5 class="mb-0">Registrar nuevo turno</h5>
                 </div>
                 <div class="container mt-4">
-                    <form action="SvNuevoTurno" method="post">
+                    <form action="SvTurnos" method="post">
                         <div class="form-group col-md">
                             <label for="inputIDCiudadano">Ciudadano: </label>
-                            <select class="form-control" size="3" aria-label="size 3 select example" id="inputIDCiudadano" name="idCiudadano" >
+                            <select class="form-control" size="3" required
+                                    aria-label="size 3 select example" 
+                                    id="inputIDCiudadano" name="idCiudadano" >
                                 <% for (Ciudadano ciudadano : (List<Ciudadano>) request.getAttribute("ciudadanos")) {%>
                                 <option value=<%=ciudadano.getId()%>>
                                     <%=ciudadano.getId() + " - " + ciudadano.getNombre() + " " + ciudadano.getApellido()%>
@@ -87,11 +87,11 @@
                         <div class="form-group col-md">
                             <label for="inputTramite">Descripcion tramite:</label>
                             <textarea class="form-control" id="inputTramite" rows="3" 
-                                      name="descripcionTramite" placeholder="breve descripcion del tramite a realizar"></textarea>
+                                      name="descripcionTramite" placeholder="breve descripcion del tramite a realizar" required></textarea>
                         </div>
                         <div class="form-group col-md align-items-center">   
                             <label for="inputAnno">Fecha:</label>
-                            <input type="date" id="inputFecha" name="inputFecha">
+                            <input type="date" id="inputFecha" name="inputFecha" min="<%=LocalDate.now()%>" required>
                         </div> 
                         <div class="row justify-content-md-center">
                             <button type="submit" class="btn btn-primary">Registrar</button>  

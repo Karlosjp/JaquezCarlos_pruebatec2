@@ -1,7 +1,9 @@
 package com.pruebatec2.gestionturnos.logica;
 
 import java.io.Serializable;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -146,6 +148,16 @@ public class Ciudadano implements Serializable {
             return false;
         }
         return Objects.equals(this.direccion, other.direccion);
+    }
+
+    public String nombreCompleto() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(nombre)
+                .append(" ")
+                .append(apellido);
+
+        return sb.toString();
     }
 
 }

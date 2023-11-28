@@ -11,13 +11,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registrar ciudadano</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
     <body>
+        <jsp:include page="nav-bar.jsp"/>
         <div class="container mt-4">
-            <div>
-                <a class="btn btn-primary" href=<%=Recursos.HOME%> role="button"><- Atras</a>
-            </div>
             <h2>Formulario registro</h2>
             <div class="row justify-content-md-center">
                 <form action="SvCiudadano" method="post">

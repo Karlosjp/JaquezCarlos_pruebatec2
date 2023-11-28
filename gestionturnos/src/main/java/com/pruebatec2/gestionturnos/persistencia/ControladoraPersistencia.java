@@ -6,6 +6,8 @@ import com.pruebatec2.gestionturnos.logica.Tramite;
 import com.pruebatec2.gestionturnos.logica.Turno;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,7 +20,7 @@ public class ControladoraPersistencia {
     TramiteJpaController tramiteJPA = new TramiteJpaController();
     TurnoJpaController turnoJPA = new TurnoJpaController();
 
-    // <editor-fold defaultstate="collapsed" desc="Persistencia Creacion methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="Persistencia Creacion methods. ">
     /**
      * Crea un nuevo usuario
      *
@@ -56,7 +58,7 @@ public class ControladoraPersistencia {
     }
 
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Persistencia Buscar methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="Persistencia Buscar methods.">
     /**
      * Si no existe registro de la direccion crea un nuevo registro. Devuelve el
      * registro encontrado o el recien creado
@@ -138,9 +140,22 @@ public class ControladoraPersistencia {
         return ciudadanoJPA.findCiudadano(id);
     }
 
+    public List<Turno> listarTurnos() {
+        return turnoJPA.findTurnoEntities();
+    }
+
+    public Turno buscarTurno(Long id) {
+        return turnoJPA.findTurno(id);
+    }
+
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Persistencia Turno methods. Click on the + sign on the left to edit the code.">
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Persistencia Tramite methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="Persistencia Buscar methods.">
+    public void editarTurno(Turno turno) {
+        try {
+            turnoJPA.edit(turno);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistencia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     // </editor-fold>
 }

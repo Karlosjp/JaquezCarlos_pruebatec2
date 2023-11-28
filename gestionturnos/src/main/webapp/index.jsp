@@ -11,16 +11,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Gestion de turnos</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </head>
     <body>
-        <div>
-            <a class="btn btn-primary" href="<%=Recursos.NUEVOCIUDADANO%>" role="button">Registrar ciudadano</a>
-        </div>
-        <form action="SvCiudadano" method="get">
-            <div>
-                <button type="submit" class="btn btn-primary">Asignar nuevo turno</button>
-            </div>
-        </form>
+        <jsp:include page="nav-bar.jsp"/>
     </body>
 </html>

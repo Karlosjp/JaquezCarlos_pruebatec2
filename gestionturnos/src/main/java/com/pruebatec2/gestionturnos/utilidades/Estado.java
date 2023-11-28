@@ -8,15 +8,15 @@ public enum Estado {
     /**
      * Indica que el proceso no ha iniciado.
      */
-    EN_ESPERA("El proceso aún no ha iniciado. Estado: [ %s ]."),
+    EN_ESPERA("Turno no iniciado."),
     /**
      * Indica que el proceso inicio pero no ha finalizado.
      */
-    EN_PROGRESO("El proceso se encuentra en progreso. Estado: [ %s ]."),
+    EN_PROGRESO("Turno en proceso"),
     /**
      * Indica que el proceso finalizo correctamente.
      */
-    YA_ATENDIDO("El proceso finalizó correctamente. Estado: [ %s ].");
+    YA_ATENDIDO("Turno ya terminado");
 
     /**
      * Mensaje del estado.

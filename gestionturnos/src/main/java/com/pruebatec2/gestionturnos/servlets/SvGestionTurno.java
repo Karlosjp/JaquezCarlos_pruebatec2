@@ -4,17 +4,12 @@
  */
 package com.pruebatec2.gestionturnos.servlets;
 
-import com.pruebatec2.gestionturnos.logica.Ciudadano;
-import com.pruebatec2.gestionturnos.logica.Tramite;
 import com.pruebatec2.gestionturnos.logica.Turno;
 import com.pruebatec2.gestionturnos.persistencia.ControladoraPersistencia;
-import com.pruebatec2.gestionturnos.utilidades.CUtils;
 import com.pruebatec2.gestionturnos.utilidades.Estado;
 import com.pruebatec2.gestionturnos.utilidades.Recursos;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,10 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  * https://www.youtube.com/c/CharlyCimino Encontrá más código en mi repo de
  * GitHub: https://github.com/CharlyCimino
  */
-@WebServlet(name = "SvNuevoTurno", urlPatterns = {"/SvNuevoTurno"})
-public class SvNuevoTurno extends HttpServlet {
+@WebServlet(name = "SvGestionTurno", urlPatterns = {"/SvGestionTurno"})
+public class SvGestionTurno extends HttpServlet {
 
-    ControladoraPersistencia controladora = new ControladoraPersistencia();
+    private ControladoraPersistencia controladora = new ControladoraPersistencia();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -43,7 +38,16 @@ public class SvNuevoTurno extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String idTurno = request.getParameter("id");
 
+        Turno turno = controladora.buscarTurno(Long.valueOf(idTurno));
+
+        turno.setEstado(Estado.EN_PROGRESO);
+        controladora.editarTurno(turno);
+
+        request.setAttribute("turno", turno);
+
+        request.getRequestDispatcher(Recursos.GESTIONARTURNO).forward(request, response);
     }
 
     /**
@@ -57,20 +61,12 @@ public class SvNuevoTurno extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String idCiudadano = request.getParameter("idCiudadano");
-        String descripcion = request.getParameter("descripcionTramite");
-        String fecha = request.getParameter("inputFecha");
-        LocalDate localDate = CUtils.stringToDate(fecha);
+        String idTurno = request.getParameter("id");
 
-        Ciudadano ciudadano = controladora.buscarCiudadano(Long.valueOf(idCiudadano));
+        Turno turno = controladora.buscarTurno(Long.valueOf(idTurno));
 
-        Turno turno = new Turno(CUtils.asignarTurno(), localDate, Estado.EN_ESPERA);
-        turno.setCiudadano(ciudadano);
-        controladora.crearTurno(turno);
-
-        Tramite tramite = new Tramite(descripcion);
-        tramite.setTurno(turno);
-        controladora.crearTramite(tramite);
+        turno.setEstado(Estado.YA_ATENDIDO);
+        controladora.editarTurno(turno);
 
         response.sendRedirect(Recursos.INDEXJSP);
     }
@@ -83,6 +79,6 @@ public class SvNuevoTurno extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
