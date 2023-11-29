@@ -62,44 +62,13 @@ public class ControladoraPersistencia {
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Persistencia Buscar methods.">
     /**
-     * Si no existe registro de la direccion crea un nuevo registro. Devuelve el
-     * registro encontrado o el recien creado
-     *
-     * @param direccion
-     * @return Object Direccion
-     */
-    public Direccion existeSinoCrea(Direccion direccion) {
-        Direccion d = existe(direccion);
-
-        if (d == null) {
-            crearDireccion(direccion);
-            d = direccion;
-        }
-
-        return d;
-    }
-
-    /**
-     * Si no existe registro del ciudadano crea un nuevo registro
-     *
-     * @param ciudadano
-     */
-    public void existeSinoCrea(Ciudadano ciudadano) {
-        Ciudadano c = existe(ciudadano);
-
-        if (c == null) {
-            crearCiudadano(ciudadano);
-        }
-    }
-
-    /**
      * Comprueba si la direccion ya esta en un registro. Si no lo esta retorna
      * null
      *
      * @param direccion
      * @return Object Direccion / null
      */
-    private Direccion existe(Direccion direccion) {
+    public Direccion existe(Direccion direccion) {
         Direccion dir = null;
         List<Direccion> direcciones = direccionJPA.findDireccionEntitiesCountry(direccion.getCiudad());
 
@@ -120,7 +89,7 @@ public class ControladoraPersistencia {
      * @param direccion
      * @return Object Direccion / null
      */
-    private Ciudadano existe(Ciudadano ciudadano) {
+    public Ciudadano existe(Ciudadano ciudadano) {
         Ciudadano ciu = null;
         List<Ciudadano> ciudadanos = ciudadanoJPA.findCiudadanoEntitiesName(ciudadano.getNombre());
 
@@ -134,18 +103,40 @@ public class ControladoraPersistencia {
         return ciu;
     }
 
+    /**
+     * Devuelve todos los ciudadanos registrados en la BBDD
+     *
+     * @return List<Ciudadano>
+     */
     public List<Ciudadano> listarCiudadanos() {
         return ciudadanoJPA.findCiudadanoEntities();
     }
 
+    /**
+     * Busca en la bbdd registros de ciudadano con el id pasado por parametro
+     *
+     * @param id
+     * @return Ciudadano
+     */
     public Ciudadano buscarCiudadano(Long id) {
         return ciudadanoJPA.findCiudadano(id);
     }
 
+    /**
+     * Devuelve todos los turnos registrados en la BBDD
+     *
+     * @return List<Turno>
+     */
     public List<Turno> listarTurnos() {
         return turnoJPA.findTurnoEntities();
     }
 
+    /**
+     * Busca en la bbdd registros de turno con el id pasado por parametro
+     *
+     * @param id
+     * @return Turno
+     */
     public Turno buscarTurno(Long id) {
         return turnoJPA.findTurno(id);
     }
@@ -160,21 +151,13 @@ public class ControladoraPersistencia {
         return turnoJPA.findTurnoByDate(ld);
     }
 
-    /**
-     * Filtra la lista de turnos por le estado indicado
-     *
-     * @param ld LocalDate
-     * @param std Estado enum
-     * @return List<Turno>
-     */
-    public List<Turno> buscarTurnoBy(LocalDate ld, Estado std) {
-        return buscarTurnoBy(ld).stream()
-                .filter(t -> t.getEstado().equals(std))
-                .toList();
-    }
-
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Persistencia Editar methods.">
+    /**
+     * Inteta editar el registro de la bbdd del turno pasado por parametro
+     *
+     * @param turno
+     */
     public void editarTurno(Turno turno) {
         try {
             turnoJPA.edit(turno);

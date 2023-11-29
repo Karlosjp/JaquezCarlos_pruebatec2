@@ -150,6 +150,11 @@ public class Ciudadano implements Serializable {
         return Objects.equals(this.direccion, other.direccion);
     }
 
+    /**
+     * Crea un String concatenando el nombre y el apellido
+     *
+     * @return String
+     */
     public String nombreCompleto() {
         StringBuilder sb = new StringBuilder();
 

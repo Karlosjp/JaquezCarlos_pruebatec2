@@ -131,6 +131,11 @@ public class Direccion implements Serializable {
         this.ciudadanos = ciudadanos;
     }
 
+    /**
+     * Concatena todos los atributos de Direccion para crear un solo String
+     *
+     * @return String
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

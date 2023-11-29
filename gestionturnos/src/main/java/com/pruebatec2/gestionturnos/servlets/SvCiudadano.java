@@ -5,8 +5,8 @@
 package com.pruebatec2.gestionturnos.servlets;
 
 import com.pruebatec2.gestionturnos.logica.Ciudadano;
+import com.pruebatec2.gestionturnos.logica.Controladora;
 import com.pruebatec2.gestionturnos.logica.Direccion;
-import com.pruebatec2.gestionturnos.persistencia.ControladoraPersistencia;
 import com.pruebatec2.gestionturnos.utilidades.Recursos;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "SvCiudadano", urlPatterns = {"/SvCiudadano"})
 public class SvCiudadano extends HttpServlet {
 
-    ControladoraPersistencia controladora = new ControladoraPersistencia();
+    private Controladora controladora = new Controladora();
 
     /**
      * Handles the HTTP <code>GET</code> method.

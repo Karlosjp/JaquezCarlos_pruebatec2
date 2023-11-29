@@ -205,6 +205,12 @@ public class CiudadanoJpaController implements Serializable {
         }
     }
 
+    /**
+     * Busca registros de Ciudadano con el nombre pasado por marametro
+     *
+     * @param nombre
+     * @return List<Ciudadano>
+     */
     public List<Ciudadano> findCiudadanoEntitiesName(String nombre) {
         EntityManager em = getEntityManager();
 

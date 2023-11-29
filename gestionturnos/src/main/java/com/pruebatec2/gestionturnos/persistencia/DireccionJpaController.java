@@ -167,6 +167,13 @@ public class DireccionJpaController implements Serializable {
         }
     }
 
+    /**
+     * Busca registros de Direccion que tengan la misma ciudad que se ha pasado
+     * por parametro
+     *
+     * @param ciudad
+     * @return List<Direccion>
+     */
     public List<Direccion> findDireccionEntitiesCountry(String ciudad) {
         EntityManager em = getEntityManager();
 

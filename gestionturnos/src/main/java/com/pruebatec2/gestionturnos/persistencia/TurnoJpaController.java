@@ -194,6 +194,13 @@ public class TurnoJpaController implements Serializable {
         }
     }
 
+    /**
+     * Busca registros de turno en la bbdd que tengan la misma fecha pasada por
+     * parametro
+     *
+     * @param ld
+     * @return List<Turno>
+     */
     public List<Turno> findTurnoByDate(LocalDate ld) {
         EntityManager em = getEntityManager();
 
