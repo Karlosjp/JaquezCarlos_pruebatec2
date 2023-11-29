@@ -37,9 +37,7 @@
                             </form>
                         </li>
                         <li class="nav-item">
-                            <form action="SvTurnos" method="get">
-                                <button type="submit" class="nav-link btn btn-primary">Gestionar turno</button>
-                            </form>
+                            <a class="nav-link btn btn-primary" href="<%=Recursos.BUSCARTURNOS%>" role="button">Gestionar turno</a>
                         </li>
                     </ul>
                 </div>

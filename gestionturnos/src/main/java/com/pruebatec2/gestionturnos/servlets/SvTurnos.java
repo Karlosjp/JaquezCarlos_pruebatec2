@@ -43,7 +43,24 @@ public class SvTurnos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Turno> lista = controladora.listarTurnos();
+        String fecha = request.getParameter("fecha");
+        String estado = request.getParameter("estado");
+
+        List<Turno> lista = null;
+
+        switch (estado) {
+            case "EN_ESPERA":
+                lista = controladora.buscarTurnoBy(CUtils.stringToDate(fecha), Estado.EN_ESPERA);
+                break;
+            case "EN_PROGRESO":
+                lista = controladora.buscarTurnoBy(CUtils.stringToDate(fecha), Estado.EN_PROGRESO);
+                break;
+            case "YA_ATENDIDO":
+                lista = controladora.buscarTurnoBy(CUtils.stringToDate(fecha), Estado.YA_ATENDIDO);
+                break;
+            default:
+                lista = controladora.buscarTurnoBy(CUtils.stringToDate(fecha));
+        }
 
         request.setAttribute("turnos", lista);
 

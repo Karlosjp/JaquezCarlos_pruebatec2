@@ -4,6 +4,7 @@
     Author     : Carlos Jaquez
 --%>
 
+<%@page import="java.time.LocalDate"%>
 <%@page import="com.pruebatec2.gestionturnos.utilidades.Estado"%>
 <%@page import="java.util.List"%>
 <%@page import="com.pruebatec2.gestionturnos.logica.Turno"%>
@@ -17,10 +18,40 @@
     <body>
         <jsp:include page="nav-bar.jsp"/>
         <div class="container mt-4">
+            <form action="SvTurnos" method="get">
+                <div class="form-row">
+                    <div class="form-group col-md-3">  
+                        <label for="inputAnno">Fecha:</label>
+                        <input type="date" id="inputFecha" name="fecha" value="<%=LocalDate.now()%>" required>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="estado">Estado: </label>
+                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="estado"> 
+                            id="estado" name="estado" >
+                            <option value="-1" selected>None</option>
+                            <% for (Estado e : Estado.values()) {%>
+                            <option value=<%=e%>>
+                                <%=e%>
+                            </option>
+                            <% }%>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <button type="submit" class="btn btn-primary">Buscar</button>  
+                    </div>
+                </div>
+            </form>
             <div class="card-header align-items-center">
                 <h5 class="mb-0">Lista de turnos</h5>
             </div>
-            <% if (request.getAttribute("turnos") != null) {%>
+            <% if (request.getAttribute("turnos") != null) {
+                    List<Turno> turnos = (List<Turno>) request.getAttribute("turnos");
+                    if (turnos.isEmpty()) {%>
+            <div class="card-header align-items-center">
+                <h5 class="mb-0">No hay datos registrados</h5>
+            </div>            
+            <%} else {%>
+
             <div class="card-group">
                 <% for (Turno turno : (List<Turno>) request.getAttribute("turnos")) {%>
 
@@ -54,7 +85,8 @@
                         </div>
                     </div>
                 </div>
-                <% }%>
+                <% }
+                    }%>
             </div>
             <% } else {%>
             <div class="card-header align-items-center">

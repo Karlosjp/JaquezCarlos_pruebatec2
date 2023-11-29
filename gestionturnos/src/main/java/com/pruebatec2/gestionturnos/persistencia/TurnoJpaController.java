@@ -14,10 +14,12 @@ import com.pruebatec2.gestionturnos.logica.Ciudadano;
 import com.pruebatec2.gestionturnos.logica.Turno;
 import com.pruebatec2.gestionturnos.persistencia.exceptions.NonexistentEntityException;
 import com.pruebatec2.gestionturnos.utilidades.Recursos;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
 
 /**
  *
@@ -187,6 +189,22 @@ public class TurnoJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             return em.find(Turno.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Turno> findTurnoByDate(LocalDate ld) {
+        EntityManager em = getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Turno> query = cb.createQuery(Turno.class);
+
+            Root<Turno> turno = query.from(Turno.class);
+            Query q = em.createQuery(query.where(cb.equal(turno.get("fecha"), ld)));
+
+            return q.getResultList();
         } finally {
             em.close();
         }

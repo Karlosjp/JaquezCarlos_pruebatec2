@@ -4,6 +4,8 @@ import com.pruebatec2.gestionturnos.logica.Ciudadano;
 import com.pruebatec2.gestionturnos.logica.Direccion;
 import com.pruebatec2.gestionturnos.logica.Tramite;
 import com.pruebatec2.gestionturnos.logica.Turno;
+import com.pruebatec2.gestionturnos.utilidades.Estado;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
@@ -148,8 +150,31 @@ public class ControladoraPersistencia {
         return turnoJPA.findTurno(id);
     }
 
+    /**
+     * Hace una consulta para buscar turnos en una determinada fecha
+     *
+     * @param ld LocalDate
+     * @return List<Turno>
+     */
+    public List<Turno> buscarTurnoBy(LocalDate ld) {
+        return turnoJPA.findTurnoByDate(ld);
+    }
+
+    /**
+     * Filtra la lista de turnos por le estado indicado
+     *
+     * @param ld LocalDate
+     * @param std Estado enum
+     * @return List<Turno>
+     */
+    public List<Turno> buscarTurnoBy(LocalDate ld, Estado std) {
+        return buscarTurnoBy(ld).stream()
+                .filter(t -> t.getEstado().equals(std))
+                .toList();
+    }
+
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Persistencia Buscar methods.">
+    // <editor-fold defaultstate="collapsed" desc="Persistencia Editar methods.">
     public void editarTurno(Turno turno) {
         try {
             turnoJPA.edit(turno);

@@ -15,6 +15,7 @@ public class Recursos {
 
     public static final String HOME = "/gestionturnos/index.jsp";
     public static final String NUEVOCIUDADANO = "/gestionturnos/nuevoCiudadano.jsp";
+    public static final String BUSCARTURNOS = "/gestionturnos/mostrarTurnos.jsp";
 
     public static final String PERSISTENCENAME = "turneroJPAPU";
 
