@@ -14,6 +14,7 @@ Para el proyecto es necesario interactuar con una BBDD, JSP, JPA y manejar colec
 # Instalacion
 El proyecto utiliza una BBDD mysql llamada `turnero`. Usuario root, contrasña "".
 Creamos la conexion con la BBDD y actualizamos las dependencias de maven (pom.xml)
+En la carpeta **Documentos y extras** esta el conector para la BBDD 8.1 y el sql con la base de datos
 
 # Uso
 El proyecto se abrira en index.jpg (Home). Lo primero seria registrar a los ciudadanos (con todos sus datos: dni, nombre, apellidos, direccion...) que van a utilizar el servicio de turnero.
