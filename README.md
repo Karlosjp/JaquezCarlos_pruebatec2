@@ -1,5 +1,9 @@
 # JaquezCarlos_pruebatec2
 <em> # Prueba Técnica Nº 2 - Java Avanzado - Consigna </em>
+
+Proyecto realizado para la prueba tecnica de java avanzado. Consiste en desarrollar un turnero donde se puedan almacenar en base de datos turnos para diferentes tramites y ciudadanos. 
+Para el proyecto es necesario interactuar con una BBDD, JSP, JPA y manejar coleciones y operaciones CRUD.
+
 # Funcionalidades del proyecto
 - `Registrar ciudadanos`: Registrar ciudadanos: Para poder realzar las operaciones es necesario registrar ciudadanos en la BBDD.
 - `Agregar un nuevo turno`: Si hay ciudadanos registrados se podran crear nuevos turnos para tramitar en un futuro. Estos se crean en estado "EN_ESPERA".
