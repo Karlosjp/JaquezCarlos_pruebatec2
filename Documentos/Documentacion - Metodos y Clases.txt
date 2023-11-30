@@ -1,0 +1,70 @@
+Clases del proyecto:
+*- Logica:
+   - Ciudadano: Entidad de la BBDD. 
+   Tiene el metodo nombreCompleto(), se utiliza para mostrar nombre + apellido del ciudadano en la seleccion de estos para crear los turnos. 
+
+   - Direccion: Entidad de la BBDD, complementa a Ciudadano en una relacion 1 Direccion para muchos Ciudadanos
+   Tiene el metodo toString() para concatenar las diferentes partes de la direccion de la siguiente forma: calle, nº portal, piso puerta, ciudad, privincia, cp.
+
+   - Turno: Entidad de la BBDD.
+
+   - Tramite: Entidad de la BBDD, complementa a Turno en una relacion 1 Turno para 1 Tramite
+
+   - Controladora: Hace de intermediario entre la capa logica y la de persistencia. 
+   En esta se encuetran los metodos:
+      *- Creacion para Ciudadano, Direccion, Turno y Tramite -> Metodos puente con ControladoraPersistencia para crear un registro de cada entidad.
+      *- existeSinoCrea para Ciudadano y Direccion. Utiliza el metodo existe() de ControladoraPersistencia para ver si el objeto pasado por parametro ya esta registrado en la BBDD, si no lo esta crea un nuevo registro
+      *- Buscar/Listar para Ciudadano y Turnos -> Metodos puente con ControladoraPersistencia para buscar registros para el parametro indicado.
+      *- BuscarTurnoBy -> devuelve una lista con los turnos que tengan la fecha indicada por parametro. Tambien se puede hacer agregando el filtro de Estado
+      *- EditarTurno -> Metodo puente con ControladoraPersistencia para editar el turno pasado por parametro.
+
+*- Persistencia:
+   - CiudadanoJpaController: Clase creada por NetBeans para la entidad Ciudadano. 
+   Se crearon los metodos, de forma automatica, de create, edit, destroy, findCiudadanoEntities (3 sobrecargas con diferentes parametros), findCiudadano (con id parametro) y getCiudadanoCount. 
+   Metodo findCiudadanoEntitiesName(String) crea una query con un where para el campo nombre. Devuelve todos los ciudadanos que coincidan con el nombre indicado.
+   
+   - DireccionJpaController: Clase creada por NetBeans para la entidad Direccion. 
+   Se crearon los metodos, de forma automatica, de create, edit, destroy, findDireccionEntities (3 sobrecargas con diferentes parametros), findDireccion (con id parametro) y getDireccionCount. 
+   Metodo findDireccionEntitiesCountry(String) crea una query con un where para el campo ciudad. Devuelve todos las direcciones que coincidan con la ciudad indicada.
+
+   - TurnoJpaController: Clase creada por NetBeans para la entidad Turno. 
+   Se crearon los metodos, de forma automatica, de create, edit, destroy, findTurnoEntities (3 sobrecargas con diferentes parametros), findTurno (con id parametro) y getTurnoCount. 
+   Metodo findTurnoByDate(LocalDate) crea una query con un where para el campo fecha. Devuelve todos los turnos que coincidan con la fecha indicada.
+
+   - TramiteJpaController: Clase creada por NetBeans para la entidad Tramite. 
+   Se crearon los metodos, de forma automatica, de create, edit, destroy, findTramiteEntities (3 sobrecargas con diferentes parametros), findTramite (con id parametro) y getTramiteCount. 
+
+   - ControladoraPersistencia: Contiene una instancia de todos los JpaController. Desde esta clase se realizan todas las acciones sobre estos JpaController.
+      *- Metodos crear para Ciudadano, Direccion, Turno, Tramite
+      *- Metodos listar/buscar para Ciudadano y Turno.
+      *- Metodo existe (2 sobrecargas) para Ciudadano y Direccion. Manda a buscar en JpaController de la entidad correspondiente todos los registros que coincidan con el parametro y recoge una lista. Cuando tiene la lista la filtra hasta encontrar la entidad igual al objeto pasado por parametro y lo devuelve (Si no hay devuelve null)
+      *- Metodo editar para Turno.
+   
+   - Excepcions -> PreexistingEntityException, NonexistentEntityException, IllegalOrphanException creadas por NetBeans para interactuar con la conexion a la BBDD.
+
+*- Servlets:
+   - SvCiudadano: Interactua con la controladora (logica) para realizar las tareas que se le solicitan en las peticiones:
+      *- GET -> Devuelve una lista completa de todos los ciudadanos registrados en la BBDD.
+      *- POST -> Recoge los datos enviados por request y crea una nueva Direccion (si es necesario) y le asigna la creacion de un nuevo Ciudadano.
+
+   - SvGestionTurno: Interactua con la controladora (logica) para realizar las tareas que se le solicitan en las peticiones:
+      *- GET -> Localiza el ID del turno recibido por request, cambia su estado a "EN_PROCESO" y devuelve sus datos.
+      *- POST -> Localiza el ID del turno recibido por request y cambia su estado a "YA_ATENTIDO".
+
+   - SvTurno: Interactua con la controladora (logica) para realizar las tareas que se le solicitan en las peticiones:
+      *- GET -> Recibe la peticion request con la fecha (y/o el estado) para devolver los turnos filtrados desde la bbdd por dichos atributos.
+      *- POST -> Recibe la peticion request con los datos del Turno y el Tramite para crear nuevos registros en la BBDD. 
+
+*- Utilidades:
+   - CUtils: Contiene funciones a modo de libreria para realizar diversas tareas.
+      *- Metodo datosString(String) recibe un String y comprueba si esta vacio o es null. Devuelve un boolean con el resultado de esto.
+      Su funcion era utilizarlo en los servlets para asegurarse de que los datos no vienen vacios. 
+
+      *- Metodo stringToDate(String) recibe un String de una fecha y lo formatea a un LocalDate para luego devolverlo.
+      Pasa la fecha recibida en el post para luego registrarlo como un LocalDate en el turno
+
+      *- Metodo asignarTurno crea un String utilizando el dia del mes-3 primeras letras del mes-numero. Luego lo devuelve. 
+      Este metodo se utiliza para asignar los numeros de los turnos.
+   
+   - Estado: Enum con los diferentes estados que pueden tener los turnos.
+   - Recursos: Contiene los string importantes que se utilizan luego en el programa. Estos serian las direcciones de los jsp y el nombre de la persistencia.
